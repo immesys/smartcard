@@ -85,7 +85,6 @@ func (c *Scard) Apdu(apdu []byte) ([]byte, error) {
 	if c.State != CONNECTED {
 		return nil, fmt.Errorf("don't Connect to Card, %w", smartcard.ErrComm)
 	}
-	fmt.Printf("APDU: [% X], len: %d\n", apdu, len(apdu))
 	ch := make(chan []byte)
 	chErr := make(chan error)
 
@@ -103,7 +102,6 @@ func (c *Scard) Apdu(apdu []byte) ([]byte, error) {
 
 	select {
 	case resp := <-ch:
-		fmt.Printf("Response: [% X], len: %d\n", resp, len(resp))
 		result := make([]byte, len(resp))
 		copy(result, resp)
 		return result, nil
